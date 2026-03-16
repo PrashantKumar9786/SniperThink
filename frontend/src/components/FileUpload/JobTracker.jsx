@@ -16,7 +16,7 @@ const statusIcons = {
   completed: "✅",
   failed: "❌",
 };
-
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 export default function JobTracker({ jobIds }) {
   const [jobs, setJobs] = useState({});
 
@@ -32,12 +32,12 @@ export default function JobTracker({ jobIds }) {
         }
         try {
           const res = await axios.get(
-            `http://localhost:5000/api/job/${id}/status`,
+            `${API}/job/${id}/status`,
           );
           updates[id] = res.data;
           if (res.data.status === "completed" && !jobs[id]?.result) {
             const resultRes = await axios.get(
-              `http://localhost:5000/api/job/${id}/result`,
+              `${API}/job/${id}/result`
             );
             updates[id].result = resultRes.data;
           }

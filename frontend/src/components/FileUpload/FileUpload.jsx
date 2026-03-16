@@ -9,7 +9,7 @@ export default function FileUpload({ onJobCreated }) {
   const [status, setStatus] = useState("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const inputRef = useRef();
-
+  const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
   const handleFile = (f) => {
     if (!f) return;
     const allowed = ["application/pdf", "text/plain"];
@@ -44,7 +44,7 @@ export default function FileUpload({ onJobCreated }) {
       formData.append("email", form.email);
 
       const res = await axios.post(
-        "http://localhost:5000/api/upload",
+        `${API}/upload`,
         formData,
       );
       setStatus("success");

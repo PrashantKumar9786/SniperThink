@@ -5,12 +5,12 @@ import axios from "axios";
 export default function InterestForm({ step, onClose }) {
   const [form, setForm] = useState({ name: "", email: "" });
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
-
+  const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
   const handleSubmit = async () => {
     if (!form.name || !form.email) return;
     setStatus("loading");
     try {
-      await axios.post("http://localhost:5000/api/interest", {
+      await axios.post(`${API}/interest`, {
         name: form.name,
         email: form.email,
         selectedStep: step.title,

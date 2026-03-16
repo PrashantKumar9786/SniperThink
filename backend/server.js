@@ -26,7 +26,13 @@ sequelize
   .authenticate()
   .then(() => {
     console.log("✅ DB connected");
-    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+
+      // Start worker in same process
+      require("./workers/fileWorker");
+      console.log("🔧 Worker started within server");
+    });
   })
   .catch((err) => {
     console.error("❌ DB connection error:", err.message);
